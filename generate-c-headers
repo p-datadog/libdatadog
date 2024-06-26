@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#set -e
+set -x
+
+mkdir -p c-include
+
+for f in `find -name cbindgen.toml`; do
+  cbindgen --crate $(basename $(dirname $f)) \
+    --config $f \
+    --output c-include/$(basename $(dirname $f) |sed -e s/-ffi//).h
+done
