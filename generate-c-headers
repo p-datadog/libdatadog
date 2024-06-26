@@ -6,7 +6,8 @@ set -x
 mkdir -p c-include
 
 for f in `find -name cbindgen.toml`; do
-  cbindgen --crate $(basename $(dirname $f)) \
+  crate=`grep '^name =' $(dirname $f)/Cargo.toml |head -1 |awk -F'"' '{print $2}'`
+  cbindgen --crate $crate \
     --config $f \
     --output c-include/$(basename $(dirname $f) |sed -e s/-ffi//).h
 done
