@@ -9,5 +9,5 @@ for f in `find -name cbindgen.toml`; do
   crate=`grep '^name =' $(dirname $f)/Cargo.toml |head -1 |awk -F'"' '{print $2}'`
   cbindgen --crate $crate \
     --config $f \
-    --output c-include/$(basename $(dirname $f) |sed -e s/-ffi//).h
+    --output c-include/$(basename $(dirname $f) |sed -e s/-ffi// -e s/^dd//).h
 done
